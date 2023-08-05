@@ -1,0 +1,15 @@
+export class SearchResult {
+    total: number;
+    start: number;
+    limit: number;
+    records: any[]
+    constructor(total: number,
+        start: number,
+        limit: number,
+        records: any[]) {
+        this.total = total;
+        this.start = start;
+        this.limit = limit;
+        this.records = records;
+    }
+}

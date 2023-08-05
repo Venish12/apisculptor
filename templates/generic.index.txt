@@ -1,0 +1,25 @@
+import express from "express";
+import { myDataSource } from "./db/db.config";
+
+
+const app = express();
+app.use(express.json())
+
+// give your routes over here....reffer below example
+// app.use("/address", UserAddressRouter)
+
+const port = 4011;
+
+
+myDataSource.initialize()
+    .then(() => {
+        console.log("Data Source has been initialized!")
+    })
+    .catch((err) => {
+        console.error("Error during Data Source initialization:", err)
+    })
+
+
+app.listen(port, (): void => {
+    console.log("server is running on" + port);
+})

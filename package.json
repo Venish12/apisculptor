@@ -1,0 +1,25 @@
+{
+  "name": "apisculptor",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./build/index.js",
+  "scripts": {
+    "start": "ts-node index.ts",
+    "build": "npx tsc"
+  },
+  "bin": {
+    "apisculptor": "./build/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nanospinner": "^1.1.0",
+    "ts-morph": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.5",
+    "inquirer": "^8.2.6",
+    "inquirer-select-directory": "^1.2.0"
+  }
+}
