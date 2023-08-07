@@ -1,6 +1,6 @@
 {
   "name": "apisculptor",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "./build/index.js",
   "scripts": {
@@ -15,11 +15,11 @@
   "license": "ISC",
   "dependencies": {
     "nanospinner": "^1.1.0",
-    "ts-morph": "^19.0.0"
-  },
-  "devDependencies": {
-    "@types/node": "^20.4.5",
+    "ts-morph": "^19.0.0",
     "inquirer": "^8.2.6",
     "inquirer-select-directory": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.5"
   }
 }
