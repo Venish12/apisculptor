@@ -2,6 +2,7 @@
 import fs, { readFileSync, writeFileSync } from "fs";
 import { execSync } from "child_process";
 import { createSpinner } from 'nanospinner';
+import path from "path";
 
 
 const inquirer = require('inquirer');
@@ -43,6 +44,8 @@ function getProjectName(dirPath: string) {
 function intializeProject(dirName: string, dirPath: string) {
     let destinationPath = dirPath + "/" + dirName
     console.log(destinationPath)
+    var lastIndexBuild = __dirname.lastIndexOf("build");
+    var basePath = path.resolve(__dirname.substring(0, lastIndexBuild))
 
     if (!fs.existsSync(destinationPath)) {
         fs.mkdirSync(destinationPath)
@@ -66,34 +69,34 @@ function intializeProject(dirName: string, dirPath: string) {
         fs.mkdirSync(destinationPath + "/src/util")
     }
 
-    let templateIndex = readFileSync("./templates/generic.index.txt").toString()
+    let templateIndex = readFileSync(basePath + "/templates/generic.index.txt").toString()
     writeFileSync(destinationPath + "/src/app.ts", templateIndex)
 
 
-    let templateDb = readFileSync("./templates/generic.db.config.txt").toString()
+    let templateDb = readFileSync(basePath + "/templates/generic.db.config.txt").toString()
     writeFileSync(destinationPath + "/src/db/db.config.ts", templateDb)
 
 
-    let templateBase = readFileSync("./templates/generic.base-entity.model.txt").toString()
+    let templateBase = readFileSync(basePath + "/templates/generic.base-entity.model.txt").toString()
     writeFileSync(destinationPath + "/src/util/base-entity.model.ts", templateBase)
 
 
 
-    let templateError = readFileSync("./templates/generic.error-result.txt").toString()
+    let templateError = readFileSync(basePath + "/templates/generic.error-result.txt").toString()
     writeFileSync(destinationPath + "/src/util/error-result.ts", templateError)
 
 
-    let templateSearch = readFileSync("./templates/generic.search-result.txt").toString()
+    let templateSearch = readFileSync(basePath + "/templates/generic.search-result.txt").toString()
     writeFileSync(destinationPath + "/src/util/search-result.ts", templateSearch)
 
 
-    let templateUtils = readFileSync("./templates/generic.utils.txt").toString()
+    let templateUtils = readFileSync(basePath + "/templates/generic.utils.txt").toString()
     writeFileSync(destinationPath + "/src/util/utils.ts", templateUtils)
 
-    let templatePackage = readFileSync("./templates/generic.package.txt").toString()
+    let templatePackage = readFileSync(basePath + "/templates/generic.package.txt").toString()
     writeFileSync(destinationPath + "/package.json", templatePackage)
 
-    let templateTsCongig = readFileSync("./templates/generic.tsconfig.txt").toString()
+    let templateTsCongig = readFileSync(basePath + "/templates/generic.tsconfig.txt").toString()
     writeFileSync(destinationPath + "/tsconfig.json", templateTsCongig)
 
     const spinner = createSpinner('running npm install....').start();

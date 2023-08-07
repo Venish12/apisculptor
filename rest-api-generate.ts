@@ -1,6 +1,7 @@
 
 import { Project, SourceFile } from 'ts-morph'
 import fs, { writeFileSync } from 'fs';
+import path from 'path';
 
 const inquirer = require('inquirer');
 inquirer.registerPrompt('directory', require('inquirer-select-directory'));
@@ -28,6 +29,8 @@ async function run(selectedpath: string) {
     sources.push(selectedpath + '/model/*.model.ts')
     const sourceFiles = project.addSourceFilesAtPaths(sources)
     let classMap = await createClassMap(sourceFiles);
+    var lastIndexBuild = __dirname.lastIndexOf("build");
+    var basePath = path.resolve(__dirname.substring(0, lastIndexBuild))
 
     for (let key of classMap.keys()) {
         let keywords = {
@@ -38,20 +41,20 @@ async function run(selectedpath: string) {
             ENRICH: ""
         }
         console.log(key + " processed")
-        generateController(keywords, selectedpath);
-        generateService(keywords, classMap.get(key), selectedpath);
+        generateController(keywords, selectedpath, basePath);
+        generateService(keywords, classMap.get(key), selectedpath, basePath);
 
     }
 }
 
-function generateController(keywords: any, selectedpath: string) {
-    let template = fs.readFileSync("./templates/generic.controller.txt").toString();
+function generateController(keywords: any, selectedpath: string, basePath: string) {
+    let template = fs.readFileSync(basePath + "/templates/generic.controller.txt").toString();
     template = replaceVariable(template, keywords)
     writeFile(template, selectedpath + "/controllers/", keywords.MODEL_NAME_WITH_DASH + ".controller.ts");
 
 }
 
-function generateService(keywords: any, properties: any, selectedpath: string) {
+function generateService(keywords: any, properties: any, selectedpath: string, basePath: string) {
     for (let prop of properties) {
         if (prop.isForeignKey) {
             keywords.DYNAMIC_IMPORTS =
@@ -70,7 +73,7 @@ function generateService(keywords: any, properties: any, selectedpath: string) {
         }
     }
 
-    let template = fs.readFileSync("./templates/generic.service.txt").toString();
+    let template = fs.readFileSync(basePath + "/templates/generic.service.txt").toString();
     template = replaceVariable(template, keywords)
     writeFile(template, selectedpath + "/service/", keywords.MODEL_NAME_WITH_DASH + ".service.ts");
 
