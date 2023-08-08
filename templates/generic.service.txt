@@ -8,21 +8,21 @@ import { ValidationError, validate } from "class-validator";
 export class [[MODEL_NAME_WITHOUT_KEY]]Service {
 
     static async add(data: [[MODEL_NAME]]): Promise<[[MODEL_NAME]]> {
-        let addr = await myDataSource.getRepository([[MODEL_NAME]]).create(data)
-        await this.validateBeforeCreate(addr)
-        addr = await this.enrich(addr)
-        const result = await myDataSource.getRepository([[MODEL_NAME]]).save(addr)
+        let [[MODEL_NAME_WITHOUT_KEY_LOWER]] = await myDataSource.getRepository([[MODEL_NAME]]).create(data)
+        await this.validateBeforeCreate([[MODEL_NAME_WITHOUT_KEY_LOWER]])
+        [[MODEL_NAME_WITHOUT_KEY_LOWER]] = await this.enrich([[MODEL_NAME_WITHOUT_KEY_LOWER]])
+        const result = await myDataSource.getRepository([[MODEL_NAME]]).save([[MODEL_NAME_WITHOUT_KEY_LOWER]])
         return result;
     }
 
     static async update(uid: string, data: [[MODEL_NAME]]): Promise<[[MODEL_NAME]]> {
-        let addr = await myDataSource.getRepository([[MODEL_NAME]]).findOneBy({
+        let [[MODEL_NAME_WITHOUT_KEY_LOWER]] = await myDataSource.getRepository([[MODEL_NAME]]).findOneBy({
             uid: uid
         })
-        myDataSource.getRepository([[MODEL_NAME]]).merge(addr, data)
-        await this.validateBeforeUpdate(addr)
-        addr = await this.enrich(addr)
-        const result = await myDataSource.getRepository([[MODEL_NAME]]).save(addr)
+        myDataSource.getRepository([[MODEL_NAME]]).merge([[MODEL_NAME_WITHOUT_KEY_LOWER]], data)
+        await this.validateBeforeUpdate([[MODEL_NAME_WITHOUT_KEY_LOWER]])
+        [[MODEL_NAME_WITHOUT_KEY_LOWER]] = await this.enrich([[MODEL_NAME_WITHOUT_KEY_LOWER]])
+        const result = await myDataSource.getRepository([[MODEL_NAME]]).save([[MODEL_NAME_WITHOUT_KEY_LOWER]])
         return result
     }
 

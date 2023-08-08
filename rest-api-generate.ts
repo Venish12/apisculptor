@@ -37,6 +37,7 @@ async function run(selectedpath: string) {
             MODEL_NAME: key,
             MODEL_NAME_WITHOUT_KEY: key.replace(/Model$/, ''),
             MODEL_NAME_WITH_DASH: convertWithDash(key.toString()),
+            MODEL_NAME_WITHOUT_KEY_LOWER: key.replace(/Model$/, '').toLowerCase(),
             DYNAMIC_IMPORTS: "",
             ENRICH: ""
         }
