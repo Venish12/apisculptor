@@ -10,7 +10,23 @@
   "bin": {
     "apisculptor": "./build/index.js"
   },
-  "keywords": [],
+  "keywords": [
+    "apisculptor",
+    "automaticapi",
+    "apigenerator",
+    "autogenerator",
+    "apigenerate",
+    "autocontrollers",
+    "autoroutes",
+    "autocrud",
+    "auto",
+    "autoservice",
+    "api-sculptor",
+    "autoservice",
+    "apigenerated",
+    "rest-api-generator",
+    "projectinitializer"
+  ],
   "author": "VENISH KORAT",
   "license": "MIT",
   "dependencies": {
