@@ -1,6 +1,6 @@
 {
   "name": "apisculptor",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "",
   "main": "./build/index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "apisculptor": "./build/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "VENISH KORAT",
   "license": "MIT",
   "dependencies": {
     "inquirer": "^8.2.6",
