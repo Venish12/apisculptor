@@ -1,85 +1,31 @@
-import express, { Router } from "express";
-import { SearchResult } from "../util/search-result";
 import { [[MODEL_NAME_WITHOUT_KEY]]Service } from "../service/[[MODEL_NAME_WITH_DASH]].service";
-import { ErrorResult } from "../util/error-result";
+import { [[MODEL_NAME]] } from "../model/[[MODEL_NAME_WITH_DASH]].model";
+import { DeleteResult } from "typeorm";
+import { SearchResult } from "../util/search-result";
+import { Route, Post, Put, Delete, Get, Path, Query, Body, Tags } from 'tsoa';
 
-export const [[MODEL_NAME_WITHOUT_KEY]]Router: Router = express.Router();
-
-[[MODEL_NAME_WITHOUT_KEY]]Router.post("/", async (req, res) => {
-    try {
-        let ans = await [[MODEL_NAME_WITHOUT_KEY]]Service.add(req.body);
-        return res.status(200).json(ans);
+@Route('[[MODEL_NAME_WITHOUT_KEY_LOWER]]')
+@Tags("[[MODEL_NAME_WITHOUT_KEY]]")
+export class [[MODEL_NAME_WITHOUT_KEY]]Controller {
+    @Post('/')
+    static async add(@Body() data: [[MODEL_NAME]]): Promise<[[MODEL_NAME]]> {
+        return [[MODEL_NAME_WITHOUT_KEY]]Service.add(data);
     }
-    catch (e: any) {
-        return res.status(400).json(
-            new ErrorResult(true, e.message)
-        )
+    @Put('/:uid')
+    static async update(@Path() uid: string, @Body() data: [[MODEL_NAME]]): Promise<[[MODEL_NAME]]> {
+        return [[MODEL_NAME_WITHOUT_KEY]]Service.update(uid, data);
     }
-})
-
-[[MODEL_NAME_WITHOUT_KEY]]Router.put("/:uid", async (req, res) => {
-    try {
-        let ans = await [[MODEL_NAME_WITHOUT_KEY]]Service.update(req.params.uid, req.body);
-        return res.status(200).json(ans);
+    @Delete('/:uid')
+    static async delete(@Path() uid: string): Promise<DeleteResult> {
+        return [[MODEL_NAME_WITHOUT_KEY]]Service.delete(uid);
     }
-    catch (e: any) {
-        return res.status(400).json(
-            new ErrorResult(true, e.message)
-        )
+    @Get('/byuid/:uid')
+    static async getByUid(@Path() uid: string): Promise<[[MODEL_NAME]]> {
+        return [[MODEL_NAME_WITHOUT_KEY]]Service.getByUid(uid);
     }
-})
-
-[[MODEL_NAME_WITHOUT_KEY]]Router.delete("/:uid", async (req, res) => {
-    try {
-        let ans = await [[MODEL_NAME_WITHOUT_KEY]]Service.delete(req.params.uid);
-        return res.status(200).json(ans);
+    @Get('/search')
+    static async find(@Query() query: any, @Query() order: any, @Query() start: number = 0, @Query() limit: number = 10,): Promise<SearchResult<[[MODEL_NAME]]>> {
+        let result = await [[MODEL_NAME_WITHOUT_KEY]]Service.find(query, order, start, limit);
+        return new SearchResult(result[1], start, limit, result[0])
     }
-    catch (e: any) {
-        return res.status(400).json(
-            new ErrorResult(true, e.message)
-        )
-    }
-})
-
-[[MODEL_NAME_WITHOUT_KEY]]Router.get("/byuid/:uid", async (req, res) => {
-    try {
-        let ans = await [[MODEL_NAME_WITHOUT_KEY]]Service.getByUid(req.params.uid);
-        return res.status(200).json(ans);
-    }
-    catch (e: any) {
-        return res.status(400).json(
-            new ErrorResult(true, e.message)
-        )
-    }
-})
-
-[[MODEL_NAME_WITHOUT_KEY]]Router.get("/search", async (req, res) => {
-    try {
-        let start = 0, limit = 10, sort: any = {};
-        if (req.query.start) {
-            start = Number(req.query.start);
-            delete req.query.start;
-        }
-        if (req.query.limit) {
-            limit = Number(req.query.limit);
-            delete req.query.limit
-        }
-        if (req.query.sort) {
-            sort = req.query.sort;
-            sort = JSON.parse(sort)
-            delete req.query.sort;
-        }
-        const query = req.query;
-        let [records, count] = await [[MODEL_NAME_WITHOUT_KEY]]Service.find(query, sort, start, limit);
-        return res.status(200).json(new SearchResult(count, start, limit, records));
-    }
-    catch (e: any) {
-        return res.status(400).json(
-            new ErrorResult(true, e.message)
-        )
-    }
-})
-
-
-
-
+}

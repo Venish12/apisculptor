@@ -1,5 +1,6 @@
-# Apisculptor - Automated REST API Generator for TypeORM Models
-Apisculptor is a powerful Node.js tool designed to automate the process of generating RESTful APIs for your TypeORM models. With Apisculptor, you can quickly create a new project, define your TypeORM models, and effortlessly generate CRUD (Create, Read, Update, Delete) APIs for them.
+
+# Apisculptor - Automated REST API Generator for TypeORM Models 
+Apisculptor is a powerful Node.js tool designed to automate the process of generating RESTful APIs for your TypeORM models. With Apisculptor, you can quickly create a new project, define your TypeORM models, and effortlessly generate CRUD (Create, Read, Update, Delete) APIs for them and also swagger documentaion.
 ## Installation
 To use Apisculptor in your Node.js project, you can install it via npm:
 ```bash
@@ -114,6 +115,17 @@ Apiscuptor supports a wide range of operators that can be used in your query par
 * `acb`: ArrayContainedBy
 * `aol`: ArrayOverlap
 * `raw`: Raw
+
+## Automatic Swagger Documentation
+Apiscuptor generated project also provides a convenient way to automatically generate Swagger documentation for all your generated API routes. To generate the Swagger documentation, simply run the following command:
+```
+npm run swagger
+```
+This command will automatically generate the Swagger documentation based on the routes defined in your generated APIs. You can access the Swagger documentation by navigating to the specified URL in your browser. We have used [tsoa](https://tsoa-community.github.io/docs/getting-started.html). you can use tsoa decorator for your custom api
+
+Swagger UI
+Swagger UI provides an interactive and user-friendly interface for exploring and testing your API endpoints. With the automatically generated Swagger documentation, you can easily visualize your API structure, request/response formats, and even execute API calls directly from the Swagger UI interface.
+
 ## Project Structure
 Apisculptor follows a specific project structure to organize your code effectively. Here's how your project structure should look like:
 ```go

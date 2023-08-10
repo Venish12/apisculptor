@@ -8,7 +8,6 @@ import path from "path";
 const inquirer = require('inquirer');
 
 inquirer.registerPrompt('directory', require('inquirer-select-directory'));
-
 export function init() {
 
     inquirer.prompt([{
@@ -59,6 +58,9 @@ function intializeProject(dirName: string, dirPath: string) {
     if (!fs.existsSync(destinationPath + "/src/controllers")) {
         fs.mkdirSync(destinationPath + "/src/controllers")
     }
+    if (!fs.existsSync(destinationPath + "/src/router")) {
+        fs.mkdirSync(destinationPath + "/src/router")
+    }
     if (!fs.existsSync(destinationPath + "/src/service")) {
         fs.mkdirSync(destinationPath + "/src/service")
     }
@@ -68,6 +70,10 @@ function intializeProject(dirName: string, dirPath: string) {
     if (!fs.existsSync(destinationPath + "/src/util")) {
         fs.mkdirSync(destinationPath + "/src/util")
     }
+
+    let templateTsoa = readFileSync(basePath + "/templates/generic.tsoa.txt").toString()
+    writeFileSync(destinationPath + "/tsoa.json", templateTsoa)
+
 
     let templateIndex = readFileSync(basePath + "/templates/generic.index.txt").toString()
     writeFileSync(destinationPath + "/src/app.ts", templateIndex)

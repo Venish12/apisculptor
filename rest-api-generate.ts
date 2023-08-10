@@ -5,21 +5,20 @@ import path from 'path';
 
 const inquirer = require('inquirer');
 inquirer.registerPrompt('directory', require('inquirer-select-directory'));
-
 export function bootstrap() {
-
-    inquirer.prompt([{
-        type: 'directory',
-        name: 'path',
-        message: 'navigate to your initialized directory?',
-        options: {
-            displayFiles: false
-        },
-        basePath: process.cwd()
-    }]).then(async function (data: any) {
-        let selectedpath = data.path;
-        await run(selectedpath);
-    });
+    -
+        inquirer.prompt([{
+            type: 'directory',
+            name: 'path',
+            message: 'navigate to your initialized directory?',
+            options: {
+                displayFiles: false
+            },
+            basePath: process.cwd()
+        }]).then(async function (data: any) {
+            let selectedpath = data.path;
+            await run(selectedpath);
+        });
 }
 
 async function run(selectedpath: string) {
@@ -27,11 +26,13 @@ async function run(selectedpath: string) {
     let sources = [];
 
     sources.push(selectedpath + '/model/*.model.ts')
+
     const sourceFiles = project.addSourceFilesAtPaths(sources)
+
     let classMap = await createClassMap(sourceFiles);
+
     var lastIndexBuild = __dirname.lastIndexOf("build");
     var basePath = path.resolve(__dirname.substring(0, lastIndexBuild))
-
     for (let key of classMap.keys()) {
         let keywords = {
             MODEL_NAME: key,
@@ -43,6 +44,7 @@ async function run(selectedpath: string) {
         }
         console.log(key + " processed")
         generateController(keywords, selectedpath, basePath);
+        generateRouter(keywords, selectedpath, basePath);
         generateService(keywords, classMap.get(key), selectedpath, basePath);
 
     }
@@ -52,6 +54,12 @@ function generateController(keywords: any, selectedpath: string, basePath: strin
     let template = fs.readFileSync(basePath + "/templates/generic.controller.txt").toString();
     template = replaceVariable(template, keywords)
     writeFile(template, selectedpath + "/controllers/", keywords.MODEL_NAME_WITH_DASH + ".controller.ts");
+
+}
+function generateRouter(keywords: any, selectedpath: string, basePath: string) {
+    let template = fs.readFileSync(basePath + "/templates/generic.router.txt").toString();
+    template = replaceVariable(template, keywords)
+    writeFile(template, selectedpath + "/router/", keywords.MODEL_NAME_WITH_DASH + ".router.ts");
 
 }
 
